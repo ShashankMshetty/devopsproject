@@ -4,21 +4,31 @@ import axios from 'axios';
 
 function MovieList({ onMovieClick }) {
   const [movies, setMovies] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_MOVIE_API_URL}/movies`).then((response) => {
-      setMovies(response.data.movies);
-    });
+    axios
+      .get(`${process.env.REACT_APP_MOVIE_API_URL}/movies`)
+      .then((response) => {
+        setMovies(response.data.movies || []);
+        setError('');
+      })
+      .catch(() => {
+        setError('Unable to load movies right now. Please try again later.');
+      });
   }, []);
 
   return (
-    <ul>
-      {movies.map((movie) => (
-        <li className="movieItem" key={movie.id} onClick={() => onMovieClick(movie)}>
-          {movie.title}
-        </li>
-      ))}
-    </ul>
+    <>
+      {error && <p role="alert">{error}</p>}
+      <ul>
+        {movies.map((movie) => (
+          <li className="movieItem" key={movie.id} onClick={() => onMovieClick(movie)}>
+            {movie.title}
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 
