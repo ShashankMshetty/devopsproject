@@ -76,5 +76,5 @@ jobs:
       - name: Install dependencies
         run: pipenv install --dev
 
-      - name: Build backend
-        run: pipenv run python -m compileall .
+      - name: Build backend Docker image
+        run: docker build --tag backend-ci .

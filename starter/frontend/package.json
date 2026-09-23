@@ -14,7 +14,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "serve": "serve -s build",
+    "serve": "serve -s build -l 3000",
     "lint": "eslint .",
     "start": "react-scripts start",
     "build": "react-scripts build",
